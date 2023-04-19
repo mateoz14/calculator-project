@@ -4,20 +4,29 @@ let equalButton = document.querySelector('.equal')
 let plusButton = document.querySelector('.plus')
 
 let currentNumber = ""
-let nextNumber = ""
-let whichNumber = 0
-
+let currentAnswer = 0
+// ^ holds a variable for the current answer inside of the calculator so
+// we can use multiple numbers.
 
 oneButton.addEventListener('click', () => {
     output.textContent += "1";
+    currentNumber += "1";
+    // adds number user clicks to the current number.
 });
 
 plusButton.addEventListener('click', () => {
-    currentNumber = +output.textContent
-    output.textContent = ""
-});
+    output.textContent += " + ";
+    currentAnswer += +currentNumber;
+    // sets the current answer to equal the currentNumber
+    currentNumber = "";
+    // resets the current number
+})
 
 equalButton.addEventListener('click', () => {
-    nextNumber = +output.textContent
-    output.textContent = `${currentNumber + nextNumber}`
-}); // this works but only if there are two numbers put in
+    currentAnswer += +currentNumber;
+    // currentAnswer will display x + y.
+    output.textContent = `${currentAnswer}`;
+    currentAnswer = 0;
+    currentNumber = "";
+    // resets all.
+})
