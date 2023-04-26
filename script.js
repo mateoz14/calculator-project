@@ -5,56 +5,60 @@ let addButton = document.querySelector('.add')
 let multiplyButton = document.querySelector('.mult');
 let subtactButton = document.querySelector('.sub');
 
-let numbers = {currentNumber: "", currentAnswer: 0, chosenOperator: 0};
+let numbers = {number1: 0, number2: 0, chosenOperator: 0};
 // i scratched the idea of making these 3 variables variables themselves,
 // because they would have trouble changing through the functions, changing them
 // as objects was the appropriate solution.
 
 oneButton.addEventListener('click', () => {
     output.textContent += "1";
-    numbers.currentNumber += "1";
+    numbers.number2 += "1";
     // adds number user clicks to the current number.
 });
 
 function addition() {
-    output.textContent += " + ";
-    if (numbers.currentNumber == "") {
-        // do nothing so that current answer doesnt turn to NaN.
-    } else {
-        numbers.currentAnswer += parseInt(numbers.currentNumber)
-    };
-    numbers.currentNumber = "";
-    // resets current number
     numbers.chosenOperator = addition;
+    if (numbers.number2 == "") {
+        // do nothing so that current answer doesnt turn to NaN.
+    } else if ((numbers.number2 != "") && (numbers.chosenOperator != addition)) {
+        numbers.chosenOperator()
+    } else {
+        numbers.number1 += parseInt(numbers.number2)
+    };
+    numbers.number2 = "";
+    // resets current number
     // makes the operator from the object switch to additon incase the equal button is hit.
 };
 
 function subtraction() {
-    output.textContent += " - ";
-    if (numbers.currentNumber == "" ) {
-        // do nothing.
-    }
-    else if (numbers.currentAnswer == 0) {
-        numbers.currentAnswer += parseInt(numbers.currentNumber)
-        // set current answer to the current number.
-    } else {
-        numbers.currentAnswer = numbers.currentAnswer - parseInt(numbers.currentNumber);
-    }
-    numbers.currentNumber = "";
     numbers.chosenOperator = subtraction;
+    if (numbers.number2 == "" ) {
+        // do nothing.
+    } else if ((numbers.number2 != "") && (numbers.chosenOperator != subtraction)) {
+        numbers.chosenOperator()
+    }
+    else if (numbers.number1 == 0) {
+        numbers.number1 += parseInt(numbers.number2)
+        // set current answer to the current number.
+    }  else {
+        numbers.number1 = numbers.number1 - parseInt(numbers.number2);
+    }
+    numbers.number2 = "";
 }
 
 subtactButton.addEventListener('click', () => {
+    output.textContent += ' - ';
     subtraction();
 })
 
 addButton.addEventListener('click', () => {
+    output.textContent += ' + ';
     addition(); // calls for the addition function.
 })
 
 function operate(operator) {
     operator()
-    output.textContent = `${numbers.currentAnswer}`
+    output.textContent = `${numbers.number1}`
     // outputs the current answer after hitting =.
 }
 
